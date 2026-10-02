@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UC Shop</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg:#1c2028;--card:#272c36;--line:#3a4150;--tx:#f2f4f7;--mut:#8b93a3;--or:#ffa000;--gr:#3ddc84;--bl:#0a84ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:230px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+header b{color:var(--or);font-size:20px;letter-spacing:1px}
+header a{background:var(--or);color:#000;text-decoration:none;padding:8px 14px;border-radius:10px;font-weight:700}
+h1{color:var(--or);text-align:center;margin:16px 12px 4px;font-size:26px}
+.sub{text-align:center;color:var(--mut);font-size:13px;margin:0 12px 12px}
+.pill{margin:0 14px 12px;border:1px solid #6b5420;border-radius:30px;padding:10px;text-align:center;color:var(--or);font-size:13px}
+.box{margin:0 14px 12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.box small{color:var(--mut)}.row{display:flex;gap:10px;margin:8px 0}
+input{flex:1;min-width:0;background:#20242c;border:1px solid var(--line);border-radius:12px;color:var(--tx);padding:13px;font-size:17px}
+.ok{background:var(--bl);color:#fff;border:0;border-radius:12px;width:54px;font-size:22px}
+.tabs{display:flex;gap:8px;margin:0 14px 12px;overflow-x:auto}
+.tab{white-space:nowrap;background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:12px;padding:12px 16px;font-size:15px;font-weight:600}
+.tab.on{background:#4a3a1a;border-color:var(--or);color:var(--or)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 14px}
+.p{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 4px 10px;text-align:center;color:var(--tx);font:inherit}
+.p.sel{border-color:var(--or);background:#3a3020}
+.p .e{font-size:26px;display:block}.p b{font-size:15px}.p .pr{color:var(--or);font-weight:700;font-size:17px;display:block}
+.p i{font-style:normal;color:var(--mut);font-size:11px;display:block}.p u{text-decoration:none;color:var(--gr);font-size:11px;font-weight:600}
+.hit{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--or);color:#000;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px}
+.q{margin:0 14px 10px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.q button{width:100%;text-align:left;background:none;border:0;color:var(--tx);padding:14px;font:600 15px inherit;display:flex;justify-content:space-between;gap:10px}
+.q div{display:none;padding:0 14px 14px;color:var(--mut);font-size:14px;line-height:1.5}.q.open div{display:block}
+.rv{margin:0 14px;text-align:center}.rv a{display:block;background:var(--or);color:#000;font-weight:800;text-decoration:none;padding:14px;border-radius:12px;margin-top:12px}
+.cart{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid #6b5420;border-radius:22px 22px 0 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px))}
+.cart .t{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.cart .t span{color:var(--mut)}.cart .t b{color:var(--gr);font-size:26px}
+.buy{width:100%;border:0;border-radius:14px;padding:16px;font-size:18px;font-weight:700;background:var(--or);color:#000}
+.buy:disabled{background:#323846;color:var(--mut)}.cart small{display:block;text-align:center;color:var(--mut);font-size:11px;margin-top:8px}
+.hide{display:none}
+</style></head><body>
+<header><b>UC SHOP</b><a href="https://t.me/phamto900">💬 Поддержка</a></header>
+<h1>Купить UC PUBG Mobile</h1>
+<p class="sub">Доставка за 30 секунд • Лучшие цены • 100% безопасно</p>
+<div class="pill">⭐ Отзывы покупателей — в канале @phamto900</div>
+
+<div class="box"><b>Шаг 1 — ваш Player ID</b>
+<div class="row"><input id="pid" inputmode="numeric" placeholder="5XXXXXXXXX"><button class="ok" onclick="chk()">✓</button></div>
+<small>PUBG Mobile → Профиль → ID под ником</small></div>
+
+<div class="tabs">
+<button class="tab on" data-t="uc">⚡ UC</button>
+<button class="tab" data-t="faq">❓ Вопросы</button>
+<button class="tab" data-t="rev">⭐ Отзывы</button></div>
+
+<section id="uc"><div class="box"><input id="cu" inputmode="numeric" placeholder="Сколько UC нужно? Например, 660" style="width:100%"></div><div class="grid" id="g"></div></section>
+<section id="faq" class="hide"></section>
+<section id="rev" class="hide"><div class="rv"><p style="color:var(--mut)">Все отзывы наших покупателей собраны в канале. Купили UC — напишите отзыв там 🙏</p><a href="https://t.me/phamto900">⭐ Читать и писать отзывы @phamto900</a></div></section>
+
+<div class="cart"><div class="t"><span id="ct">Ничего не выбрано</span><b id="sum">0 ₽</b></div>
+<button class="buy" id="buy" disabled onclick="order()">Выберите пакет UC</button>
+<small>Продолжая, я принимаю условия использования и конфиденциальности</small></div>
+
+<script>
+const tg=window.Telegram&&Telegram.WebApp;if(tg){tg.ready();tg.expand()}
+const P=[[60,86,'🎟️'],[180,258,'🔫'],[325,434,'🪖'],[385,520,'🎒'],[660,860,'💣'],[720,946,'🚁'],[985,1294,'🛡️'],[1320,1720,'🏍️'],[1800,2190,'🔥',1],[1920,2362,'🚙'],[2460,3050,'⚔️'],[3850,4290,'👑',1],[5650,6480,'💎'],[8100,8600,'🏆',1],[9900,10790,'🚀'],[12010,12976,'🌟'],[16200,17200,'💰'],[24300,25800,'🎖️'],[32400,34400,'🦅'],[40500,43000,'🐉'],[81000,86000,'🌌']];
+const F=(n)=>n.toLocaleString('ru-RU'),R=(n,d=2)=>n.toFixed(d).replace('.',',');
+let sel=null;
+const g=document.getElementById('g');
+P.forEach((p,i)=>{const[u,pr,e,h]=p,b=document.createElement('button');b.className='p';
+b.innerHTML=(h?'<span class="hit">ХИТ</span>':'')+'<span class="e">'+e+'</span><b>'+u+' UC</b><span class="pr">'+F(pr)+' ₽</span><i>'+R(pr/u)+' ₽/UC</i>'+(i?'<u>+'+Math.floor(pr*0.008)+' ₽ на счёт</u>':'');
+b.onclick=()=>{sel=i;upd()};g.appendChild(b)});
+function upd(){[...g.children].forEach((c,i)=>c.classList.toggle('sel',i===sel));
+const buy=document.getElementById('buy');
+if(sel===null){ct.textContent='Ничего не выбрано';sum.textContent='0 ₽';buy.disabled=true;buy.textContent='Выберите пакет UC';return}
+const[u,pr]=P[sel];ct.textContent=P[sel][2]+' '+u+' UC';sum.textContent=F(pr)+' ₽';buy.disabled=false;buy.textContent='Оплатить '+F(pr)+' ₽'}
+document.getElementById('cu').oninput=e=>{const v=+e.target.value;if(!v)return;let k=P.findIndex(p=>p[0]>=v);if(k<0)k=P.length-1;sel=k;upd();g.children[k].scrollIntoView({block:'center',behavior:'smooth'})};
+function chk(){const v=pid.value.trim();const ok=/^\d{8,12}$/.test(v);const m=ok?'✅ ID принят':'Введите корректный Player ID (8–12 цифр)';tg&&tg.showAlert?tg.showAlert(m):alert(m);return ok}
+function order(){if(!/^\d{8,12}$/.test(pid.value.trim())){chk();return}
+const d={player_id:pid.value.trim(),uc:P[sel][0],price:P[sel][1]};
+if(tg&&tg.initData){tg.sendData(JSON.stringify(d))}else{location.href='https://t.me/phamto900?text='+encodeURIComponent('Заказ: '+d.uc+' UC, '+d.price+' ₽, ID '+d.player_id)}}
+const Q=[['⚡ Как быстро придут UC?','Обычно за 30 секунд после оплаты. В редких случаях до 15 минут.'],
+['🆔 Где взять Player ID?','PUBG Mobile → Профиль → число под ником. Это 8–12 цифр, обычно начинается с 5.'],
+['🔒 Это безопасно?','Да. Нужен только Player ID — пароль и вход в аккаунт не запрашиваются.'],
+['💳 Как оплатить?','После выбора пакета нажмите «Оплатить» и следуйте инструкции в боте.'],
+['❌ UC не пришли, что делать?','Проверьте Player ID и подождите 15 минут. Если UC нет — напишите в поддержку @phamto900 с номером заказа.'],
+['🎁 Что значит «на счёт»?','Кэшбэк с покупки — зачисляется на баланс в кабинете и списывается со следующего заказа.'],
+['⭐ Где отзывы?','В канале @phamto900. Будем рады вашему отзыву после покупки!']];
+Q.forEach(([a,b])=>{const d=document.createElement('div');d.className='q';d.innerHTML='<button>'+a+'<span>＋</span></button><div>'+b+'</div>';d.firstChild.onclick=()=>d.classList.toggle('open');faq.appendChild(d)});
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));['uc','faq','rev'].forEach(k=>document.getElementById(k).classList.toggle('hide',k!==t.dataset.t))});
+</script></body></html>
